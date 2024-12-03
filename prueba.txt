@@ -19,11 +19,13 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
-        .calculator .header {
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             background-color: #1e2125;
             color: #fff;
             padding: 15px;
-            text-align: center;
         }
         .results {
             background-color: #1e2125;
@@ -43,6 +45,27 @@
         .btn-yellow:hover {
             background-color: #e0a800;
         }
+        .form-check-inline {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-check-inline input {
+            margin-right: 10px;
+        }
+        .inline-group {
+            display: flex;
+            gap: 10px;
+        }
+        .inline-group .input-group {
+            flex: 1;
+        }
+        a.clear-all {
+            color: #ffc107;
+            text-decoration: none;
+        }
+        a.clear-all:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -50,8 +73,11 @@
 <div class="calculator row">
     <!-- Formulario -->
     <div class="col-md-6 p-4">
-        <h5 class="mb-4">Mortgage Calculator</h5>
-        <form>
+        <div class="header">
+            <h5 class="mb-0">Mortgage Calculator</h5>
+            <a href="#" class="clear-all">Clear All</a>
+        </div>
+        <form class="mt-4">
             <div class="mb-3">
                 <label for="mortgageAmount" class="form-label">Mortgage Amount</label>
                 <div class="input-group">
@@ -59,28 +85,30 @@
                     <input type="number" class="form-control" id="mortgageAmount" placeholder="300,000">
                 </div>
             </div>
-            <div class="mb-3">
-                <label for="mortgageTerm" class="form-label">Mortgage Term</label>
-                <div class="input-group">
-                    <input type="number" class="form-control" id="mortgageTerm" placeholder="25">
-                    <span class="input-group-text">years</span>
+            <div class="mb-3 inline-group">
+                <div>
+                    <label for="mortgageTerm" class="form-label">Mortgage Term</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" id="mortgageTerm" placeholder="25">
+                        <span class="input-group-text">years</span>
+                    </div>
+                </div>
+                <div>
+                    <label for="interestRate" class="form-label">Interest Rate</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" id="interestRate" placeholder="5.25">
+                        <span class="input-group-text">%</span>
+                    </div>
                 </div>
             </div>
-            <div class="mb-3">
-                <label for="interestRate" class="form-label">Interest Rate</label>
-                <div class="input-group">
-                    <input type="number" class="form-control" id="interestRate" placeholder="5.25">
-                    <span class="input-group-text">%</span>
-                </div>
-            </div>
-            <div class="mb-3">
+            <div class="mb-4">
                 <label class="form-label">Mortgage Type</label>
                 <div>
-                    <div class="form-check form-check-inline">
+                    <div class="form-check-inline">
                         <input class="form-check-input" type="radio" name="mortgageType" id="repayment" value="repayment" checked>
                         <label class="form-check-label" for="repayment">Repayment</label>
                     </div>
-                    <div class="form-check form-check-inline">
+                    <div class="form-check-inline">
                         <input class="form-check-input" type="radio" name="mortgageType" id="interestOnly" value="interestOnly">
                         <label class="form-check-label" for="interestOnly">Interest Only</label>
                     </div>
