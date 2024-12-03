@@ -1,134 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mortgage Calculator</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f8f9fa;
-            padding: 20px;
-        }
-        .calculator {
-            max-width: 800px;
-            margin: auto;
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #1e2125;
-            color: #fff;
-            padding: 15px;
-        }
-        .results {
-            background-color: #1e2125;
-            color: #fff;
-            border-radius: 0 10px 10px 0;
-            padding: 20px;
-        }
-        .results .value {
-            font-size: 2rem;
-            font-weight: bold;
-        }
-        .btn-yellow {
-            background-color: #ffc107;
-            color: #000;
-            border: none;
-        }
-        .btn-yellow:hover {
-            background-color: #e0a800;
-        }
-        .form-check-inline {
-            display: block;
-            margin-bottom: 5px;
-        }
-        .form-check-inline input {
-            margin-right: 10px;
-        }
-        .inline-group {
-            display: flex;
-            gap: 10px;
-        }
-        .inline-group .input-group {
-            flex: 1;
-        }
-        a.clear-all {
-            color: #ffc107;
-            text-decoration: none;
-        }
-        a.clear-all:hover {
-            text-decoration: underline;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mortgage Calculator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
-<div class="calculator row">
-    <!-- Formulario -->
+  <div class="calculator row">
     <div class="col-md-6 p-4">
-        <div class="header">
-            <h5 class="mb-0">Mortgage Calculator</h5>
-            <a href="#" class="clear-all">Clear All</a>
+      <div class="row mortgage-div">
+        <h5 class="col-8">Mortgage Calculator</h5>
+        <a class="clear col-4">Clear All</a>
+      </div>
+        
+      <form>
+        <div class="mb-3">
+          <label for="mortgageAmount" class="form-label">Mortgage Amount</label>
+          <div class="input-group">
+            <span class="input-group-text">£</span>
+            <input type="number" class="form-control" id="mortgageAmount" placeholder="300,000">
+          </div>
         </div>
-        <form class="mt-4">
-            <div class="mb-3">
-                <label for="mortgageAmount" class="form-label">Mortgage Amount</label>
-                <div class="input-group">
-                    <span class="input-group-text">£</span>
-                    <input type="number" class="form-control" id="mortgageAmount" placeholder="300,000">
-                </div>
+        <div class="mb-3 inline-group">
+          <div>
+            <label for="mortgageTerm" class="form-label">Mortgage Term</label>
+            <div class="input-group">
+              <input type="number" class="form-control" id="mortgageTerm" placeholder="25">
+              <span class="input-group-text">years</span>
             </div>
-            <div class="mb-3 inline-group">
-                <div>
-                    <label for="mortgageTerm" class="form-label">Mortgage Term</label>
-                    <div class="input-group">
-                        <input type="number" class="form-control" id="mortgageTerm" placeholder="25">
-                        <span class="input-group-text">years</span>
-                    </div>
-                </div>
-                <div>
-                    <label for="interestRate" class="form-label">Interest Rate</label>
-                    <div class="input-group">
-                        <input type="number" class="form-control" id="interestRate" placeholder="5.25">
-                        <span class="input-group-text">%</span>
-                    </div>
-                </div>
+          </div>
+          <div>
+            <label for="interestRate" class="form-label">Interest Rate</label>
+            <div class="input-group">
+              <input type="number" class="form-control" id="interestRate" placeholder="5.25">
+              <span class="input-group-text">%</span>
             </div>
-            <div class="mb-4">
-                <label class="form-label">Mortgage Type</label>
-                <div>
-                    <div class="form-check-inline">
-                        <input class="form-check-input" type="radio" name="mortgageType" id="repayment" value="repayment" checked>
-                        <label class="form-check-label" for="repayment">Repayment</label>
-                    </div>
-                    <div class="form-check-inline">
-                        <input class="form-check-input" type="radio" name="mortgageType" id="interestOnly" value="interestOnly">
-                        <label class="form-check-label" for="interestOnly">Interest Only</label>
-                    </div>
-                </div>
+          </div>
+        </div>
+        <div class="mb-4">
+          <label class="form-label input-group">Mortgage Type</label>
+          <div>
+            <div class="input-group">
+              <div class="input-group-text">
+                <input class="form-check-input mt-0" type="radio" name="mortgageType" id="repayment" value="repayment">
+              </div>
+              <input type="text" class="form-control" value="Repayment" disabled>
             </div>
-            <button type="button" class="btn btn-yellow w-100">Calculate Repayments</button>
-        </form>
+            <div class="input-group">
+              <div class="input-group-text">
+                <input class="form-check-input mt-0" type="radio" name="mortgageType" id="interestOnly" value="interestOnly">
+              </div>
+              <input type="text" class="form-control" value="Interest Only" disabled>
+            </div>
+          </div>
+        </div>
+        
+        <button type="button" class="btn btn-yellow w-100">🖩 Calculate Repayments</button>
+      </form>
     </div>
 
-    <!-- Resultados -->
     <div class="results col-md-6">
-        <h5>Your results</h5>
-        <p>Your monthly repayments:</p>
-        <p class="value">£1,797.74</p>
-        <p>Total you'll repay over the term:</p>
-        <p class="value">£539,322.94</p>
+      <h5>Your results</h5>
+      <p>Your results are shown bellow based on the information you provided.To adjust the results,edit the form and
+        click "calculate repayments" again.</p>
+      <p>Your monthly repayments:</p>
+      <p class="value">£1,797.74</p>
+      <p>Total you'll repay over the term:</p>
+      <p class="value">£539,322.94</p>
     </div>
-</div>
+  </div>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
