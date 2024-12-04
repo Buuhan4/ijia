@@ -1,19 +1,45 @@
-    <div class="results col-md-6">
-      <img class="illustration" src="assets/images/illustration-empty.svg">
-      <br>
-      <h3>Results shown here</h3>
-       <p class="p-illustration">Complete de form and click "calculate repayments" to see whats your monthly repayments would be</p>
-    </div>
-    <div class="results results-2 col-md-6">
-      <h5>Your results</h5>
-      <p>Your results are shown bellow based on the information you provided.To adjust the results,edit the form and
-        click "calculate repayments" again.</p>
-      <p>Your monthly repayments:</p>
-      <input type="text" id="result" class="form-control text-end" >
-      <p>Total you'll repay over the term:</p>
-      <p class="value">£539,322.94</p>
-    </div>
+document
+  .getElementById("mortgageAmount")
+  .addEventListener("input", function (e) {
+    let inputValue = e.target.value;
+    let lastKey = inputValue.substring(inputValue.length - 1);
+    if (!lastKey.match(/^[0-9,]$/)) {
+      e.target.value = inputValue.substring(0, inputValue.length - 1);
+    } else {
+      let valueWithoutCommas = inputValue.replace(/,/g, "");
+      if (valueWithoutCommas.length > 3) {
+        let valueWithCommas = "";
+        for (let i = 0; i < valueWithoutCommas.length; i++) {
+          if (i % 3 == 0 && i !== 0) {
+            valueWithCommas += ",";
+          }
+          valueWithCommas += valueWithoutCommas[i];
+        }
+        e.target.value = valueWithCommas;
+      }
+    }
+  });
 
+document.getElementById("mortgageTerm").addEventListener("input", function (e) {
+  let inputValue = e.target.value;
+  let lastKey = inputValue.substring(inputValue.length - 1);
+  if (!lastKey.match(/^[0-9]$/)) {
+    e.target.value = inputValue.substring(0, inputValue.length - 1);
+  }
+});
+
+document.getElementById("interestRate").addEventListener("input", function (e) {
+  let inputValue = e.target.value;
+  let lastKey = inputValue.substring(inputValue.length - 1);
+  if (!lastKey.match(/^[0-9.]$/)) {
+    e.target.value = inputValue.substring(0, inputValue.length - 1);
+  } else {
+    let dotIndex = inputValue.indexOf(".");
+    if (dotIndex !== -1 && lastKey === ".") {
+      e.target.value = inputValue.substring(0, inputValue.length - 1);
+    }
+  }
+});
 
 function calculateSum() {
   const mortgageAmount = parseFloat(document.getElementById("mortgageAmount").value.replace(/,/g, ""));
@@ -61,7 +87,7 @@ function isInterestOnly() {
 
   const monthlyInterest = (mortgageAmount * (interestRate / 100)) / 12;
   document.getElementById("result").value = `£${monthlyInterest.toFixed(2)}`;
-  document.querySelector(".results").style.display = "none";  // Oculta la primera sección
-  document.querySelector(".results-2").style.display = "block";  // Muestra la segunda sección
+  document.querySelector(".results").style.display = "none";
+  document.querySelector(".results-2").style.display = "block";
 
 }
