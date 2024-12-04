@@ -1,93 +1,23 @@
-document
-  .getElementById("mortgageAmount")
-  .addEventListener("input", function (e) {
-    let inputValue = e.target.value;
-    let lastKey = inputValue.substring(inputValue.length - 1);
-    if (!lastKey.match(/^[0-9,]$/)) {
-      e.target.value = inputValue.substring(0, inputValue.length - 1);
-    } else {
-      let valueWithoutCommas = inputValue.replace(/,/g, "");
-      if (valueWithoutCommas.length > 3) {
-        let valueWithCommas = "";
-        for (let i = 0; i < valueWithoutCommas.length; i++) {
-          if (i % 3 == 0 && i !== 0) {
-            valueWithCommas += ",";
-          }
-          valueWithCommas += valueWithoutCommas[i];
-        }
-        e.target.value = valueWithCommas;
-      }
-    }
-  });
+<div class="results col-md-6">
+      <img class="illustration" src="assets/images/illustration-empty.svg">
+      <br>
+      <h3>Results shown here</h3>
+       <p class="p-illustration">Complete de form and click "calculate repayments" to see whats your monthly repayments would be</p>
+    </div>
+    <div class="results results-2 col-md-6">
+      <h3 class="results-title">Your results</h3>
+      <p class="results-information">Your results are shown below based on the information you provided. To adjust the results, edit the form and click "calculate repayments" again.</p>
 
-document.getElementById("mortgageTerm").addEventListener("input", function (e) {
-  let inputValue = e.target.value;
-  let lastKey = inputValue.substring(inputValue.length - 1);
-  if (!lastKey.match(/^[0-9]$/)) {
-    e.target.value = inputValue.substring(0, inputValue.length - 1);
-  }
-});
-
-document.getElementById("interestRate").addEventListener("input", function (e) {
-  let inputValue = e.target.value;
-  let lastKey = inputValue.substring(inputValue.length - 1);
-  if (!lastKey.match(/^[0-9.]$/)) {
-    e.target.value = inputValue.substring(0, inputValue.length - 1);
-  } else {
-    let dotIndex = inputValue.indexOf(".");
-    if (dotIndex !== -1 && lastKey === ".") {
-      e.target.value = inputValue.substring(0, inputValue.length - 1);
-    }
-  }
-});
-
-function calculateSum() {
-  const mortgageAmount = parseFloat(document.getElementById("mortgageAmount").value.replace(/,/g, ""));
-  const mortgageTerm = parseFloat(document.getElementById("mortgageTerm").value);
-  const interestRate = parseFloat(document.getElementById("interestRate").value);
-
-  if (isNaN(mortgageAmount) || isNaN(mortgageTerm) || isNaN(interestRate)) {
-    alert("Please enter valid values in all fields.");
-    return;
-  }
-
-  const isRepaymentSelected = document.getElementById("repayment").checked;
-  const isInterestOnlySelected = document.getElementById("interestOnly").checked;
-
-  if (!isRepaymentSelected && !isInterestOnlySelected) {
-    alert("Please select a mortgage type: Repayment or Interest Only.");
-    return;
-  }
-
-  if (isRepaymentSelected) {
-    isRepayment();
-  } else if (isInterestOnlySelected) {
-    isInterestOnly();
-  }
-}
-
-function isRepayment() {
-  const mortgageAmount = parseFloat(document.getElementById("mortgageAmount").value.replace(/,/g, ""));
-  const mortgageTerm = parseFloat(document.getElementById("mortgageTerm").value);
-  const interestRate = parseFloat(document.getElementById("interestRate").value);
-
-  const months = mortgageTerm * 12;
-  const monthlyRate = interestRate / 100 / 12;
-  const repayment = (mortgageAmount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -months));
-  document.getElementById("result").value = `£${repayment.toFixed(2)}`;
-  document.querySelector(".results").style.display = "none";
-  document.querySelector(".results-2").style.display = "block";
-
-}
-
-function isInterestOnly() {
-  const mortgageAmount = parseFloat(document.getElementById("mortgageAmount").value.replace(/,/g, ""));
-  const mortgageTerm = parseFloat(document.getElementById("mortgageTerm").value);
-  const interestRate = parseFloat(document.getElementById("interestRate").value);
-
-  const monthlyInterest = (mortgageAmount * (interestRate / 100)) / 12;
-  document.getElementById("result").value = `£${monthlyInterest.toFixed(2)}`;
-  document.querySelector(".results").style.display = "none";
-  document.querySelector(".results-2").style.display = "block";
-
-}
+      <div class="repayment-details">
+        <div class="repayment-item">
+          <p>Your monthly repayments:</p>
+          <input type="text" id="result" class="form-control text-end">
+        </div>
+        <div class="repayment-item">
+          <p>Total you'll repay over the term:</p>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
