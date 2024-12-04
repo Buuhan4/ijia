@@ -1,0 +1,67 @@
+    <div class="results col-md-6">
+      <img class="illustration" src="assets/images/illustration-empty.svg">
+      <br>
+      <h3>Results shown here</h3>
+       <p class="p-illustration">Complete de form and click "calculate repayments" to see whats your monthly repayments would be</p>
+    </div>
+    <div class="results results-2 col-md-6">
+      <h5>Your results</h5>
+      <p>Your results are shown bellow based on the information you provided.To adjust the results,edit the form and
+        click "calculate repayments" again.</p>
+      <p>Your monthly repayments:</p>
+      <input type="text" id="result" class="form-control text-end" >
+      <p>Total you'll repay over the term:</p>
+      <p class="value">£539,322.94</p>
+    </div>
+
+
+function calculateSum() {
+  const mortgageAmount = parseFloat(document.getElementById("mortgageAmount").value.replace(/,/g, ""));
+  const mortgageTerm = parseFloat(document.getElementById("mortgageTerm").value);
+  const interestRate = parseFloat(document.getElementById("interestRate").value);
+
+  if (isNaN(mortgageAmount) || isNaN(mortgageTerm) || isNaN(interestRate)) {
+    alert("Please enter valid values in all fields.");
+    return;
+  }
+
+  const isRepaymentSelected = document.getElementById("repayment").checked;
+  const isInterestOnlySelected = document.getElementById("interestOnly").checked;
+
+  if (!isRepaymentSelected && !isInterestOnlySelected) {
+    alert("Please select a mortgage type: Repayment or Interest Only.");
+    return;
+  }
+
+  if (isRepaymentSelected) {
+    isRepayment();
+  } else if (isInterestOnlySelected) {
+    isInterestOnly();
+  }
+}
+
+function isRepayment() {
+  const mortgageAmount = parseFloat(document.getElementById("mortgageAmount").value.replace(/,/g, ""));
+  const mortgageTerm = parseFloat(document.getElementById("mortgageTerm").value);
+  const interestRate = parseFloat(document.getElementById("interestRate").value);
+
+  const months = mortgageTerm * 12;
+  const monthlyRate = interestRate / 100 / 12;
+  const repayment = (mortgageAmount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -months));
+  document.getElementById("result").value = `£${repayment.toFixed(2)}`;
+  document.querySelector(".results").style.display = "none";
+  document.querySelector(".results-2").style.display = "block";
+
+}
+
+function isInterestOnly() {
+  const mortgageAmount = parseFloat(document.getElementById("mortgageAmount").value.replace(/,/g, ""));
+  const mortgageTerm = parseFloat(document.getElementById("mortgageTerm").value);
+  const interestRate = parseFloat(document.getElementById("interestRate").value);
+
+  const monthlyInterest = (mortgageAmount * (interestRate / 100)) / 12;
+  document.getElementById("result").value = `£${monthlyInterest.toFixed(2)}`;
+  document.querySelector(".results").style.display = "none";  // Oculta la primera sección
+  document.querySelector(".results-2").style.display = "block";  // Muestra la segunda sección
+
+}
