@@ -37,7 +37,7 @@
           <div>
             <label for="interestRate" class="form-label">Interest Rate</label>
             <div class="input-group">
-              <input type="number" step="0.25" class="form-control" id="interestRate" required>
+              <input type="number" step="0.25" class="form-control interestInput" id="interestRate" required>
               <span class="input-group-text">%</span>
             </div>
           </div>
@@ -47,20 +47,19 @@
           <div>
             <div class="input-group">
               <div class="input-group-text">
-                <input class="form-check-input mt-0" type="radio" name="mortgageType" id="repayment" value="repayment" required>
+                <input class="form-check-input mt-0"  type="radio" name="mortgageType" id="repayment" value="repayment" required>
               </div>
               <input type="text" class="form-control"  value="Repayment" disabled >
             </div>
             <div class="input-group">
               <div class="input-group-text">
-                <input class="form-check-input mt-0" type="radio" name="mortgageType" id="interestOnly"
-                  value="interestOnly"required>
+                <input class="form-check-input mt-0"  type="radio" name="mortgageType" id="interestOnly"
+                  value="interestOnly"  required>
               </div>
               <input type="text" class="form-control" value="Interest Only" disabled>
             </div>
           </div>
         </div>
-
         <button id="calculateButton" onclick="calculateSum()"><img class="emote-calculator" src="assets/images/icon-calculator.svg">Calculate
           Repayments</button>
       </form>
@@ -82,12 +81,11 @@
           <input type="text" id="result" class="form-control repayments-result">
       <hr>
           <p>Total you'll repay over the term:</p>
-          <input type="text" value="£539,322.94" class="form-control total-result">
+          <input type="text" id=="results2" class="form-control total-result">
         </div>
       </div>
     </div>
   </div>
-
 <script src="calculation.js"></script>
 </body>
 
@@ -173,6 +171,7 @@ function isRepayment() {
   const monthlyRate = interestRate / 100 / 12;
   const repayment = (mortgageAmount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -months));
   document.getElementById("result").value = `£${repayment.toFixed(2)}`;
+
   document.querySelector(".results").style.display = "none";
   document.querySelector(".results-2").style.display = "block";
 
@@ -189,178 +188,3 @@ function isInterestOnly() {
   document.querySelector(".results-2").style.display = "block";
 
 }
-
-
-
-
-
-@font-face {
-  font-family: "PlusJakartaSans-Italic-VariableFont_wght";
-  src: url(assets/fonts/PlusJakartaSans-Italic-VariableFont_wght.ttf);
-}
-@font-face {
-  font-family: "PlusJakartaSans-VariableFont_wght";
-  src: url(assets/fonts/PlusJakartaSans-VariableFont_wght.ttf);
-}
-@font-face {
-  font-family: "PlusJakartaSans-Bold";
-  src: url(assets/fonts/static/PlusJakartaSans-Bold.ttf);
-}
-@font-face {
-  font-family: "PlusJakartaSans-Medium";
-  src: url(assets/fonts/static/PlusJakartaSans-Medium.ttf);
-}
-body {
-  background-color: hsl(197, 4%, 66%);
-  padding: 20px;
-  font-family: "PlusJakartaSans-Medium";
-}
-.calculator {
-  max-width: 800px;
-  margin: auto;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-}
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: #fff;
-  padding: 15px;
-}
-.results {
-  background-color: hsl(202, 55%, 16%);
-  color: #fff;
-  border-radius: 0 10px 10px 67px;
-  padding: 20px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-label {
-  color: hsl(200, 24%, 40%);
-}
-
-.form-check-inline {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.form-check-inline input {
-  margin-right: 10px;
-}
-
-.inline-group {
-  display: flex;
-  gap: 10px;
-}
-
-.mortgage-div {
-  height: 65px;
-}
-
-.clear {
-  text-align: right;
-  color: hsl(200, 24%, 40%);
-}
-
-button {
-  height: 50px;
-  width: 270px;
-  border-radius: 999px;
-  background-color: hsl(61, 70%, 52%);
-  border: none;
-  font-family:"PlusJakartaSans-Bold";
-
-}
-.emote-calculator{
-    padding-right: 7px;
-    width: 26px;
-}
-.input-group:focus-within .input-group-text {
-  background-color: hsl(61, 70%, 52%);
-  font-family: "PlusJakartaSans-Bold";
-}
-
-input[type="text"]:focus {
-  box-shadow: none;
-  appearance: none;
-  border: hsl(61, 70%, 52%) solid;
-}
-
-.input-group-text {
-  color: hsl(200, 24%, 40%);
-  font-family: "PlusJakartaSans-Medium";
-  background-color: hsl(202, 86%, 94%);
-}
-
-h3 {
-  font-size: 22px;
-  font-family: "PlusJakartaSans-Bold";
-}
-
-.p-illustration{
-    font-size: 14px;
-}
-
-.results-2 {
-  display: none;
-  background-color: hsl(202, 55%, 16%);
-  color: #ffffff;
-  border-radius: 0 10px 10px 67px;
-  padding: 20px;
-  text-align: left;
-}
-
-.results-2 h3 {
-  text-align: left;
-  font-family: "PlusJakartaSans-Bold";
-  font-size: 22px;
-  margin-bottom: 15px;
-}
-
-.results-2 p {
-  text-align: left;
-  font-size: 14px;
-  line-height: 1.5;
-  margin-bottom: 10px;
-  color:hsl(200, 26%, 54%);
-  font-family: "PlusJakartaSans-Medium";
-}
-
-.repayment-details {
-  border-radius: 10px;
-  padding: 15px;
-  margin-top: 15px;
-  border-top: 4px solid hsl(61, 70%, 52%);
-  background-color:hsl(203, 57%, 8%);
-  height: 230px;
-}
-.repayments-result {
-  padding: 0;
-  background: none;
-  border: none;
-  font-size: 33px;
-  color: hsl(61, 70%, 52%);
-  font-family: "PlusJakartaSans-Bold";
-  text-align: left;
-  pointer-events: none;
-}
-.total-result{
-  padding: 0;
-  background: none;
-  border: none;
-  font-size: 16px;
-  color: hsl(0, 0%, 100%);
-  font-family: "PlusJakartaSans-Bold";
-  text-align: left;
-  pointer-events: none;
-}
-
-
-
-
