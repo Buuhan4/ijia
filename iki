@@ -1,3 +1,63 @@
+function validateForm() {
+  const mortgageAmount = document.getElementById("mortgageAmount");
+  const mortgageTerm = document.getElementById("mortgageTerm");
+  const interestRate = document.getElementById("interestRate");
+  const repayment = document.getElementById("repayment");
+  const interestOnly = document.getElementById("interestOnly");
+
+  const inputs = [
+    { field: mortgageAmount, message: "This field is required" },
+    { field: mortgageTerm, message: "This field is required" },
+    { field: interestRate, message: "This field is required" },
+  ];
+
+  let hasError = false;
+
+  inputs.forEach(({ field, message }) => {
+    const errorElement = field.nextElementSibling;
+    if (field.value.trim() === "") {
+      field.classList.add("error");
+      if (!errorElement || !errorElement.classList.contains("error-message")) {
+        const errorMessage = document.createElement("span");
+        errorMessage.className = "error-message";
+        errorMessage.textContent = message;
+        field.parentNode.appendChild(errorMessage);
+      }
+      hasError = true;
+    } else {
+      field.classList.remove("error");
+      if (errorElement && errorElement.classList.contains("error-message")) {
+        errorElement.remove();
+      }
+    }
+  });
+
+  if (!repayment.checked && !interestOnly.checked) {
+    const mortgageTypeError = document.getElementById("mortgageTypeError");
+    if (!mortgageTypeError) {
+      const errorMessage = document.createElement("span");
+      errorMessage.className = "error-message";
+      errorMessage.id = "mortgageTypeError";
+      errorMessage.textContent = "Please select a Mortgage Type";
+      document.querySelector(".mb-4").appendChild(errorMessage);
+    }
+    hasError = true;
+  } else {
+    const mortgageTypeError = document.getElementById("mortgageTypeError");
+    if (mortgageTypeError) {
+      mortgageTypeError.remove();
+    }
+  }
+
+  if (!hasError) {
+    calculateSum();
+  }
+}
+
+document.getElementById("calculateButton").addEventListener("click", validateForm);
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,6 +85,7 @@
             <span class="input-group-text">£</span>
             <input type="text" class="form-control" id="mortgageAmount">
           </div>
+          <span class="error-message"></span>
         </div>
         <div class="mb-3 inline-group">
           <div>
@@ -33,13 +94,15 @@
               <input type="text" class="form-control" id="mortgageTerm">
               <span class="input-group-text">years</span>
             </div>
+            <span class="error-message"></span>
           </div>
           <div>
             <label for="interestRate" class="form-label">Interest Rate</label>
             <div class="input-group">
-              <input type="number" step="0.25" class="form-control interestInput" id="interestRate">
+              <input type="number" step="0.25" class="form-control" id="interestRate">
               <span class="input-group-text">%</span>
             </div>
+            <span class="error-message"></span>
           </div>
         </div>
         <div class="mb-4">
@@ -53,129 +116,38 @@
             </div>
             <div class="input-group">
               <div class="input-group-text">
-                <input class="form-check-input mt-0" type="radio" name="mortgageType" id="interestOnly"
-                  value="interestOnly">
+                <input class="form-check-input mt-0" type="radio" name="mortgageType" id="interestOnly" value="interestOnly">
               </div>
               <input type="text" class="form-control" value="Interest Only" disabled>
             </div>
+            <span class="error-message"></span>
           </div>
         </div>
-        <button id="calculateButton" onclick="calculateSum()">
-          <img class="emote-calculator" src="assets/images/icon-calculator.svg">Calculate Repayments
-        </button>
+        <button id="calculateButton" type="button">Calculate Repayments</button>
       </form>
     </div>
 
     <div class="results col-md-6">
-      <img class="illustration" src="assets/images/illustration-empty.svg">
-      <br>
       <h3>Results shown here</h3>
-      <p class="p-illustration">Complete the form and click "calculate repayments" to see what your monthly repayments would be</p>
+      <p class="p-illustration">Complete the form and click "Calculate Repayments" to see your monthly repayments.</p>
     </div>
-    <div class="results results-2 col-md-6" style="display: none;">
-      <h3 class="results-title">Your results</h3>
-      <p class="results-information">Your results are shown below based on the information you provided. To adjust the results, edit the form and click "calculate repayments" again.</p>
 
+    <div class="results-2 col-md-6">
+      <h3>Your results</h3>
+      <p>Your results are shown below based on the information you provided. To adjust the results, edit the form and click "Calculate Repayments" again.</p>
       <div class="repayment-details">
         <div class="repayment-item">
           <p>Your monthly repayments:</p>
-          <input type="text" id="result" class="form-control repayments-result">
+          <input type="text" id="result" class="form-control repayments-result" readonly>
           <hr>
           <p>Total you'll repay over the term:</p>
-          <input type="text" id="results2" class="form-control total-result">
+          <input type="text" id="results2" class="form-control total-result" readonly>
         </div>
       </div>
     </div>
   </div>
+
   <script src="calculation.js"></script>
 </body>
 
 </html>
-
-function validateInputs() {
-  const fields = [
-    { id: "mortgageAmount", errorMessage: "Please enter the mortgage amount." },
-    { id: "mortgageTerm", errorMessage: "Please enter the mortgage term in years." },
-    { id: "interestRate", errorMessage: "Please enter the interest rate." },
-  ];
-
-  let isValid = true;
-
-  fields.forEach(({ id, errorMessage }) => {
-    const input = document.getElementById(id);
-    let errorSpan = input.nextElementSibling;
-
-    if (!errorSpan || !errorSpan.classList.contains("error-message")) {
-      errorSpan = document.createElement("span");
-      errorSpan.classList.add("error-message");
-      input.parentNode.appendChild(errorSpan);
-    }
-
-    if (!input.value.trim()) {
-      input.classList.add("error");
-      errorSpan.textContent = errorMessage;
-      errorSpan.style.display = "block";
-      isValid = false;
-    } else {
-      input.classList.remove("error");
-      errorSpan.style.display = "none";
-    }
-  });
-
-  return isValid;
-}
-
-function calculateSum() {
-  if (!validateInputs()) {
-    alert("Please fix the errors in the form.");
-    return;
-  }
-
-  const mortgageAmount = parseFloat(document.getElementById("mortgageAmount").value.replace(/,/g, ""));
-  const mortgageTerm = parseFloat(document.getElementById("mortgageTerm").value);
-  const interestRate = parseFloat(document.getElementById("interestRate").value);
-
-  const isRepaymentSelected = document.getElementById("repayment").checked;
-  const isInterestOnlySelected = document.getElementById("interestOnly").checked;
-
-  if (!isRepaymentSelected && !isInterestOnlySelected) {
-    alert("Please select a mortgage type: Repayment or Interest Only.");
-    return;
-  }
-
-  if (isRepaymentSelected) {
-    isRepayment();
-  } else if (isInterestOnlySelected) {
-    isInterestOnly();
-  }
-}
-
-function isRepayment() {
-  const mortgageAmount = parseFloat(document.getElementById("mortgageAmount").value.replace(/,/g, ""));
-  const mortgageTerm = parseFloat(document.getElementById("mortgageTerm").value);
-  const interestRate = parseFloat(document.getElementById("interestRate").value);
-
-  const months = mortgageTerm * 12;
-  const monthlyRate = interestRate / 100 / 12;
-  const repayment = (mortgageAmount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -months));
-  const totalRepayment = repayment * months;
-
-  document.getElementById("result").value = `£${repayment.toFixed(2)}`;
-  document.getElementById("results2").value = `£${totalRepayment.toFixed(2)}`;
-  document.querySelector(".results").style.display = "none";
-  document.querySelector(".results-2").style.display = "block";
-}
-
-function isInterestOnly() {
-  const mortgageAmount = parseFloat(document.getElementById("mortgageAmount").value.replace(/,/g, ""));
-  const interestRate = parseFloat(document.getElementById("interestRate").value);
-
-  const monthlyInterest = (mortgageAmount * (interestRate / 100)) / 12;
-  const totalInterest = monthlyInterest * 12;
-
-  document.getElementById("result").value = `£${monthlyInterest.toFixed(2)}`;
-  document.getElementById("results2").value = `£${totalInterest.toFixed(2)}`;
-  document.querySelector(".results").style.display = "none";
-  document.querySelector(".results-2").style.display = "block";
-}
-
