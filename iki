@@ -170,8 +170,9 @@ function isRepayment() {
   const months = mortgageTerm * 12;
   const monthlyRate = interestRate / 100 / 12;
   const repayment = (mortgageAmount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -months));
+  const monthlyInterest = (mortgageAmount * (interestRate / 100))*12;
   document.getElementById("result").value = `£${repayment.toFixed(2)}`;
-
+  document.getElementById("results2").value = `£${monthlyInterest.toFixed(2)}`;
   document.querySelector(".results").style.display = "none";
   document.querySelector(".results-2").style.display = "block";
 
@@ -183,7 +184,8 @@ function isInterestOnly() {
   const interestRate = parseFloat(document.getElementById("interestRate").value);
 
   const monthlyInterest = (mortgageAmount * (interestRate / 100))*12;
-  document.getElementById("result").value = `£${monthlyInterest.toFixed(2)}`;
+  document.getElementById("result").value = `£0`;
+  document.getElementById("results2").value = `£${monthlyInterest.toFixed(2)}`;
   document.querySelector(".results").style.display = "none";
   document.querySelector(".results-2").style.display = "block";
 
