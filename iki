@@ -15,26 +15,35 @@ function validateForm() {
 
   inputs.forEach(({ field, message, isCurrency }) => {
     const errorElement = field.nextElementSibling;
+
+    // Validación de campo vacío
     if (field.value.trim() === "") {
       field.classList.add("error");
 
+      // Si el mensaje de error no existe, lo creamos
       if (!errorElement || !errorElement.classList.contains("error-message")) {
         const errorMessage = document.createElement("span");
         errorMessage.className = "error-message";
         errorMessage.textContent = message;
         field.parentNode.appendChild(errorMessage);
       }
-      // Si es un campo con moneda o porcentaje, aplicar color rojo
+
+      // Si el campo es moneda o porcentaje, aplica fondo rojo en el span
       if (isCurrency) {
         const inputGroupText = field.closest('.input-group').querySelector('.input-group-text');
         inputGroupText.classList.add("error");
       }
+
       hasError = true;
     } else {
       field.classList.remove("error");
+
+      // Eliminar mensaje de error si el campo ya tiene valor
       if (errorElement && errorElement.classList.contains("error-message")) {
         errorElement.remove();
       }
+
+      // Si el campo es moneda o porcentaje, eliminamos el fondo rojo
       if (isCurrency) {
         const inputGroupText = field.closest('.input-group').querySelector('.input-group-text');
         inputGroupText.classList.remove("error");
@@ -42,6 +51,7 @@ function validateForm() {
     }
   });
 
+  // Validación de tipo de hipoteca seleccionada
   if (!repayment.checked && !interestOnly.checked) {
     const mortgageTypeError = document.getElementById("mortgageTypeError");
     if (!mortgageTypeError) {
